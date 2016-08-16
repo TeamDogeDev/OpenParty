@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Player {
 
-    private short id;
+    private int id;
     private String name;
-    private static short numPlayer = 0;
+    private static int numPlayer = 0;
     private TextureRegion avatar;
 
     public Player(String name, TextureRegion avatar) {
@@ -19,7 +19,7 @@ public class Player {
         this.name = name;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

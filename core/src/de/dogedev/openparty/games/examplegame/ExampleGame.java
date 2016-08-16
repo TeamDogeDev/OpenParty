@@ -13,7 +13,12 @@ import de.dogedev.openparty.internal.OpenParty;
  */
 public class ExampleGame implements Game {
 
-    float r = 0.0f;
+    int p0Points = 0;
+    int p1Points = 0;
+    int p2Points = 0;
+    int p3Points = 0;
+
+
     private OpenParty openParty;
     private Difficulty difficulty;
 
@@ -23,8 +28,21 @@ public class ExampleGame implements Game {
         this.difficulty = difficulty;
 
         openParty.setInputListener((player, input) -> {
-            if(input == Inputs.BUZZER) {
-                r += 10;
+            if (input == Inputs.BUZZER) {
+                switch (player.getId()) {
+                    case 0:
+                        p0Points++;
+                        break;
+                    case 1:
+                        p1Points++;
+                        break;
+                    case 2:
+                        p2Points++;
+                        break;
+                    case 3:
+                        p3Points++;
+                        break;
+                }
             }
         });
 
@@ -37,12 +55,25 @@ public class ExampleGame implements Game {
 
     @Override
     public void render(float deltaTime) {
-        Gdx.gl.glClearColor( (r % 255) / 255, 0, 0, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        if(r >= 30) {
+        float r = ((p0Points * 10) % 255) / 255;
+        float g = ((p1Points * 10) % 255) / 255;
+        float b = ((p2Points * 10) % 255) / 255;
+
+        Gdx.gl.glClearColor(r, g, b, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        if (winCheck()) {
             Result result = new Result();
+            result.setPoints(0, p0Points);
+            result.setPoints(1, p1Points);
+            result.setPoints(2, p2Points);
+            result.setPoints(3, p3Points);
             openParty.finish(result);
         }
+    }
+
+    public boolean winCheck() {
+        return p1Points >= 10 || p2Points >= 10 || p3Points >= 10 || p0Points >= 10;
     }
 
     @Override

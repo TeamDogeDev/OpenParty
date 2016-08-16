@@ -15,14 +15,24 @@ import de.dogedev.openparty.screens.GameOverviewScreen;
 public class OpenParty {
 
     private InputListener inputListener;
+    private Array<Player> players;
 
     public OpenParty() {
+        players = new Array<>();
+        players.add(new Player("Player1", null));
+        players.add(new Player("Player2", null));
+        players.add(new Player("Player3", null));
+        players.add(new Player("Player4", null));
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyDown(int keycode) {
                 if(inputListener == null) return false;
                 if(keycode == Input.Keys.SPACE) {
-                    inputListener.onInput(null, Inputs.BUZZER);
+                    inputListener.onInput(players.get(0), Inputs.BUZZER);
+                    return true;
+                }
+                if(keycode == Input.Keys.NUMPAD_0) {
+                    inputListener.onInput(players.get(1), Inputs.BUZZER);
                     return true;
                 }
                 return false;
@@ -35,12 +45,14 @@ public class OpenParty {
     }
 
     Array<Player> getPlayer() {
-        return Array.of(Player.class);
+        return players;
     }
 
     public void finish(Result result) {
         // result auswerten
-
-        Core.instance.setScreen(new GameOverviewScreen());
+        for (int i = 0; i < 4; i++) {
+            System.out.println("P"+i+": " + result.getPointsForPlayer(i));
+        }
+        Core.instance.showGameOverview();
     }
 }

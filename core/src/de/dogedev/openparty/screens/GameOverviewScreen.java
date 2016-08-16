@@ -44,6 +44,7 @@ public class GameOverviewScreen implements Screen {
 
         if(foobar >= 2.0) {
             Core.instance.startGame(GameLoader.getAvailableGames().first());
+            foobar = 0;
         }
     }
 
