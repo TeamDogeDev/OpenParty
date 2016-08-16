@@ -5,6 +5,6 @@ package de.dogedev.openparty.game;
  */
 public class Result {
 
-    // intentionally emptyx
+    // intentionally empty
 
 }
